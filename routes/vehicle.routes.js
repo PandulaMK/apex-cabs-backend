@@ -7,7 +7,11 @@ function toImageUrl(image_path) {
   if (!image_path) return null;
   if (String(image_path).startsWith("http")) return image_path;
 
-  const base = process.env.BASE_URL || "http://localhost:5000";
+  const base =
+  process.env.BASE_URL ||
+  (process.env.NODE_ENV === "production"
+    ? "https://apex-cabs-backend.onrender.com"
+    : "http://localhost:5000");
   return `${base}${image_path}`;
 }
 
