@@ -2,18 +2,19 @@ const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  port: 587,
+  secure: false,
+  requireTLS: true,
   auth: {
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
   },
+  family: 4,
 });
-async function sendMail({ to, subject, html }) {
-  if (!to) throw new Error("Missing recipient email");
 
+async function sendMail({ to, subject, html }) {
   return transporter.sendMail({
-    from: `"${process.env.MAIL_FROM_NAME || "Apex Cabs"}" <${process.env.MAIL_USER}>`,
+    from: `"Apex Cabs" <${process.env.MAIL_USER}>`,
     to,
     subject,
     html,
