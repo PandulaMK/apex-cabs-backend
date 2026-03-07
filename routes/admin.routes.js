@@ -1081,8 +1081,12 @@ router.post("/reminders/test-email", requireAuth, requireAdmin, async (req, res)
 
     res.json({ message: "Test email sent", to });
   } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+  console.error("Test email failed:", err);
+  return res.status(500).json({
+    message: "Email could not be sent",
+    error: err.code || err.message,
+  });
+}
 });
 
 router.post("/reminders/run-now", requireAuth, requireAdmin, async (req, res) => {
